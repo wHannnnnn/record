@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    // 深度优先遍历（按照一个结点的分支一直向下找，直到全部找完再找下一个相邻节点） 广度优先遍历（先找同一级节点再找下一级节点）
+    var obj = {
+        id: 1,
+        children: [{
+                id: 2,
+                children: [{
+                        id: 4
+                    },
+                    {
+                        id: 5
+                    }
+                ]
+            },
+            {
+                id: 3,
+                children: [{
+                    id: 6,
+                    children: [{
+                        id: 7
+                    }]
+                }]
+            }
+        ]
+    }
+    // 深度优先遍历 后进先出 占用空间小消耗时间长
+    function fn(obj) {
+        var result = [] // 需要返回的数组
+        var tempArr = [] // 执行队列
+        tempArr.push(obj)
+        while (tempArr.length > 0) {
+            var a = tempArr.pop()
+            result.push(a)
+            if(a.children) {
+                for (let i = a.children.length - 1; i >= 0; i--) {
+                    tempArr.push(a.children[i])
+                }
+            }
+        }
+        return result
+    }
+    // 广度优先遍历 先进先出 占用空间大消耗时间短
+    function fn1(obj) {
+        var result = [] // 需要返回的数组
+        var tempArr = [] // 执行队列
+        tempArr.push(obj)
+        while (tempArr.length > 0) {
+            var a = tempArr.shift()
+            result.push(a)
+            if(a.children) {
+                for (let i = 0; i < a.children.length; i++) {
+                    tempArr.push(a.children[i])
+                }
+            }
+        }
+        return result
+    }
+    function fn2(obj) {
+        try{
+            var tempArr = [] // 执行队列
+            tempArr.push(obj)
+            while (tempArr.length > 0) {
+                var a = tempArr.shift()
+                if(a.id == 4){
+                    return a
+                    throw 'err'
+                }
+                if(a.children) {
+                    for (let i = 0; i < a.children.length; i++) {
+                        tempArr.push(a.children[i])
+                    }
+                }
+            }
+        }catch(err){
+
+        }
+    }
+    // tree 转一维（递归和非递归方式 这里只写递归 非递归就是深度和广度优先遍历）
+    function fn(arr) {
+        let newArr = [];
+        for (let i = 0; i < arr.length; i++) {
+            newArr.push(arr[i])
+            if (arr[i].children) {
+                newArr = newArr.concat(fn(arr[i].children))
+                delete arr[i].children
+            }
+        }
+        return newArr
+    }
+    // 一维转 tree 
+    var arr1 = [{
+            id: 1,
+            parent: 'all'
+        },
+        {
+            id: 2,
+            parent: 1
+        },
+        {
+            id: 4,
+            parent: 2
+        },
+        {
+            id: 3,
+            parent: 1
+        },
+    ]
+    // 双循环转tree - 确定根节点
+    function fn0(arr, id, parentId, children){   
+        let cloneData = JSON.parse(JSON.stringify(arr))
+        return cloneData.filter(father=>{
+            let branchArr = cloneData.filter(child => father[id] == child[parentId]);
+            branchArr.length>0 ? father[children] = branchArr : ''; // 其实是引用地址相同，所以2修改，1中的2也会修改
+            return father[parentId] == 'all'    
+        })
+    }
+    // 双循环转tree - 不确定根节点
+    function fn00(arr, id, parentId, children){   
+        let cloneData = JSON.parse(JSON.stringify(arr));
+        let notData = [];
+        cloneData = cloneData.filter(father=>{
+            let branchArr = cloneData.filter(child => father[id] == child[parentId]);
+            branchArr.length>0 ? father[children] = branchArr : '';
+            console.log(branchArr);
+            notData = notData.concat(branchArr);
+            return true
+        })
+        notData = notData.map(e => e.id);
+        cloneData = cloneData.filter(e => !notData.includes(e.id) );
+        return cloneData;
+    }
+    console.log(fn0(arr1, 'id', 'parent', 'children'))
+    // 递归转tree
+    function fn1(arr, parentId) {
+        var newArr = []
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i].parent == parentId) {
+                arr[i].children = fn1(arr, arr[i].id)
+                newArr.push(arr[i])
+            }
+        }
+        return newArr
+    }
+    // 多维数组递归查找  可以使用try catch终止循环
+    function fn2(arr) {
+        var obj = null
+        try {
+            fn3(arr)
+            function fn3(arr){
+                for (let i = 0; i < arr.length; i++) {
+                    if(arr[i].id == 3){
+                        obj = arr[i];
+                        throw 'error'
+                    } else {
+                        arr[i].children && fn3(arr[i].children)
+                    }
+                }
+            }
+        } catch (err) {}
+        return obj
+    }
+</script>
+<script>
+    
+</script>
+
+</html>

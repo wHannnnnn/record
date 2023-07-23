@@ -1,0 +1,13 @@
+<script>
+    // 1、AMD和CMD都是异步，就是模块立即执行和模块执行到require再执行
+        // 1、AMD推崇依赖前置，在定义模块的时候就要声明其依赖的模块
+            // AMD在加载依赖模块完成后就会执行改模块，所有模块都加载执行完后会进入require的回调函数，执行主逻辑，主逻辑一定在所有依赖加载完成后才执行。
+        // 2、CMD推崇就近依赖，只有在用到某个模块的时候再去require，
+            // CMD加载完某个依赖模块后并不执行，只是下载而已，在所有依赖模块加载完成后进入主逻辑，遇到require语句的时候才执行对应的模块
+    // 2、Commonjs同步加载模块，现加载现用，只有加载完成后才能执行后面的操作
+        // 不适合在浏览器环境，同步意味着阻塞加载，浏览器资源是异步加载的，
+        // 使用 module.exports = aa   const aa = require()  
+        // exports.name = 'asd'  const obj = require()  obj.name
+    // es6   export default aa   import aa
+        //   export const aa     import { aa }
+</script>

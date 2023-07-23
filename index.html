@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div style="height: 500px; display: flex; justify-content: center;align-items: center;">
+        <div>
+            <div>
+                old：<input type="text">
+            </div>
+            <div>
+                new：<input type="text">
+            </div>
+        </div>
+        <div style="margin-left: 60px">
+            i： <input type="text">
+        </div>
+        <div style="margin-left: 60px">
+            <div>
+                s1：<input type="text">
+            </div>
+            <div>
+                s2：<input type="text">
+            </div>
+        </div>
+        <div style="margin-left: 60px">
+            <div>
+                e1：<input type="text">
+            </div>
+            <div>
+                e2：<input type="text">
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    Function.prototype.call = function(context, ...args) {
+        context = context || window
+        context.fn = this // 这里的this代表函数
+        console.log(context)
+        console.log(context.fn)
+        console.log(this)
+        var result = context.fn(...args) // 给context添加属性fn，所以执行fn方法时，里面的this代表context
+        delete context.fn
+        return result
+    }
+
+    function fn() {
+        // console.log(this)
+    }
+
+    function fn2() {}
+    fn.call(fn2)
+    console.log(fn.__proto__ === Function.prototype)
+</script>
+
+</html>

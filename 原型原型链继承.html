@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<!-- 原型 原型链 继承 -->
+<script>
+    // 原型和原型链
+    // 原型链是一个向上查找属性和方法的过程 （通过原型链查找属性和方法）
+    // 函数有prototype属性 对象有__proto__   (定义函数fn 实例对象a)  
+    // 每个原型都有一个constructor属性，指向该关联的构造函数(即fn.prototype.constructor = fn)
+    // a.__proto__ 指向 fn.prototype 所以 a.__proto__= fn.prototype   fn.prototype也是一个对象（Object） 所以 a.__proto__.__proto__= fn.prototype .__proto__ = Object.prototype 
+    // 继续往上找就是 a.__proto__.__proto__.__proto__= fn.prototype .__proto__.__proto__ = Object.prototype.__proto__ = null  直到最后如果没有找到就是null
+    // 1. 原型链继承 父类的实例作为子类的原型  缺点是引用类型数据共享 不能给父类的构造函数传参数
+    function fn() {
+        this.name = 'wangwang';
+        // this.list = [1, 2, 3, 4];
+    }
+    fn.prototype.aa = function() {
+        console.log(1)
+    }
+
+    function fn1() {
+        this.age = 18;
+    }
+    fn1.prototype = new fn();
+    fn1.prototype.list = [1, 2, 3, 4];
+    fn.prototype.aa = function() {
+        console.log(12)
+    }
+    var a1 = new fn1();
+    console.log(a1)
+    a1.list.push(5)
+    var a2 = new fn1();
+    console.log(a2)
+    a2.aa()
+    console.log(a1.__proto__ == fn1.prototype)
+    console.log(fn1.prototype)
+    console.log(a1.__proto__.__proto__ == fn1.prototype.__proto__ && fn1.prototype.__proto__ == fn.prototype)
+    console.log(a1.__proto__.__proto__.__proto__ == fn1.prototype.__proto__.__proto__ &&
+        fn1.prototype.__proto__.__proto__ == fn.prototype.__proto__ &&
+        fn.prototype.__proto__ == Object.prototype)
+    console.log(Object.prototype.__proto__ == null)
+    console.log(fn.constructor == Function)
+    console.log(a1.constructor == fn)
+</script>
+<script>
+    // 2. 构造函数继承 call apply  
+    // 修改this指向调用函数对象中的属性和方法 可以传递参数 
+    // 缺点是只能继承父类自身的属性和方法  无法继承原型中的属性和方法 每次实例化对象都得创建一遍 不能实现函数复用
+    function fn() {
+        this.wang = 'wangwang';
+        this.list = [1, 2]
+        this.getName = function() {
+            console.log(this)
+        }
+        console.log(this) // fn1
+    }
+    fn.prototype.asd = 12
+
+    function fn1(name) {
+        this.age = 18;
+        fn.call(this, name)
+    }
+    var aa = new fn1();
+    aa.wang = 'han'
+    aa.list.push(3)
+    var bb = new fn1();
+    aa.getName();
+    console.log(aa)
+    console.log(bb)
+</script>
+<script>
+    // 3. 组合继承 原型链继承 + 构造函数继承 .call调用父类的方法和属性 prototype继承原型中的方法和属性
+    // 缺点是会继承两次父类实例对象中的属性 (解决办法组合寄生继承)
+    // 4. 寄生继承(用于对象) 新建一个构造函数 这个函数作为新的父类实例 让它的原型等于旧的父类 让子类的原型等于这个构造函数 类似于原型链继承(子类的原型 = 父类的实例(这个父类是新创建的构造函数))
+    // 引用属性共享 函数没有复用(和构造函数继承类似 调用一次复制执行一次)
+    function create(obj) {
+        function F() {};
+        F.prototype = obj;
+        return new F();
+    }
+    // 或者 object.create(obj) 创建一个对象 对象的__proto__ = obj 
+    var obj = {
+        name: 'asd'
+    }
+
+    function person(obj) {
+        var clone = create(obj)
+        clone.getName = function() {
+            console.log(this.name)
+        };
+        return clone;
+    }
+    var clone = person(obj) // 函数的prototype = 父类 子类的__proto__ = 父类
+    var clone1 = person(obj)
+    console.log(clone.__proto__ == obj, clone)
+    console.log(clone1.__proto__ == obj, clone1)
+
+    // 5. 组合寄生继承 可以传参 引用类型不共享 使用原型链继承复用方法 避免调用两次父类实例对象中的属性 (查找顺序和原型链继承的查找顺序不一样！！！子类函数和父类函数 子类原型 父类原型)
+    // 为什么这样会避免二次调用父类中的属性？（新父类构造函数中没有属性 只有原型是等于原父类的原型）
+    function fn(age) {
+        this.names = 'wangwang'
+        this.ages = [2, 3, 4, 5]
+            // return  构造函数如果return引用类型对象格式，实例就会被替换为这个引用类型
+    }
+    // Function.prototype.asd = 10   函数的原型定义属性，构造函数的实例是拿不到的，属性在函数的原型里，不在实例的原型里，但是Object.prototype是可以拿到的，因为实例原型最终是Object和null
+    // fn.prototype.ages = [2,3,4,5]
+    var aobjjj = {
+        name: 'asd'
+    }
+
+    function fn1() {
+        this.age = 18;
+        fn.call(this, this.age);
+        this.name = 'hanhan'
+    }
+    // fn1.prototype = fn.prototype 不行 这样在fn中添加方法 fn1中也会有
+    function extend(son, father) {
+        // var fn = function(){};
+        // fn.prototype = father.prototype;
+        // var clone = new fn(); // clone.__proto__ = fn.prototype = father.prototype
+        // 或者
+        var clone = Object.create(father.prototype); // clone.__proto__ = father.prototype 
+        // constructor是原型上的方法指向的是生成实例的函数????????? new obj.constructor可以生成实例
+        clone.constructor = son; // 不加 指针指向父类fn
+        son.prototype = clone;
+    }
+    extend(fn1, fn)
+    fn1.prototype.get = '21'; // 添加方法加在继承后面 上面子类的原型 = 构造函数
+    var aa = new fn1();
+    aa.ages.push(6)
+    var aa1 = new fn1();
+    console.log(aa.constructor == fn1, aa) // true
+</script>
+<script>
+    // 组合继承
+    function fn() {
+        this.name = 'wangwang';
+        this.list = [1, 2, 3, 4];
+    }
+    fn.prototype.aa = 1
+
+    function fn1() {
+        this.age = 18;
+        fn.call(this)
+    }
+    fn1.prototype = new fn();
+    fn1.prototype.aname = '22'
+    var a1 = new fn1();
+    console.log(a1)
+    a1.list.push(5)
+    var a2 = new fn1();
+    console.log(a2)
+</script>
+
+</html>

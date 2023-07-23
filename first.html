@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<!-- <style>
+    body {
+        height: 20000px;
+    }
+</style> -->
+<style>
+    .all {
+        display: flex;
+    }
+    
+    .all div {
+        border: 1px solid #333;
+        height: 200px;
+    }
+    
+    .left {
+        width: 200px;
+        flex-shrink: 0;
+    }
+    
+    .right {
+        flex: 1;
+        overflow: auto;
+    }
+</style>
+
+<body>
+    <div class="all">
+        <div class="left">asdasdasd</div>
+        <div class="right">asdasdasdasdaaaaaaaaaaaaaaaaaaaaaaaaaasdaasdasdasdasdaaaaaaaaaaaaaaaaaaaaaaaaaasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdsdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd</div>
+        <!-- <div class="item">asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd</div>
+        <div class="item">asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd</div>
+        <div class="item">asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd</div>
+        <div class="item">asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd</div>
+        <div class="item">asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd</div>
+        <div class="item">asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd</div>
+        <div class="item">asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd</div>
+        <div class="item">asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd</div>
+        <div class="item">asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd</div>
+        <div class="item">asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd</div> -->
+    </div>
+    <input class="view1" type="text">
+    <input class="view2" type="text">
+    <input class="view3" type="text">
+</body>
+
+<!-- es6 -->
+<script>
+    // 1. var const let 区别？ 块就是{}
+    // var 声明变量 变量提升 可以跨块访问, 不能跨函数访问
+    // const定义常量 不可以跨块访问, 不能跨函数访问
+    // let在块级作用域中定义使用 不可以跨块访问, 不能跨函数访问 （全局定义的let和const不在window中）
+    // 同一作用域下let和const不能声明同名变量，而var可以
+    // const定义必须初始化赋值 不允许重新定义（const定义的对象中的属性是可以修改，不允许重新定义常量，但是对象中的属性是可以修改的）
+    // 2. 箭头函数和普通函数的区别？
+    // 箭头没有this和arguments （使用rest参数 写法...arg  arg是数组） 调用的是上级作用域this指向  没有就是;
+    // 箭头函数不能new，不能作为构造函数，没有prototype原型属性，任何方法都不能修改this指向
+    // 不使用代码块简写隐式返回值 var val = a => a + b， 代码块中必须使用return，var val = a => { return a + b}
+    // 如果返回是对象简写需要（）包裹 var val = a => ({ a: b})
+    // 3. Promise
+    // 4. 解构赋值
+    // 5. 拓展运算符 （用于数组对象复制 数组合并 字符串转数组 函数不定参数...arg） 
+    // 拓展内容：函数arguments是个类数组 有索引 有length 但是不能操作数组 可以使用Array.from()或者Array.prototype.slice.call(arguments) 转为真正的数组  或者直接用上面的方法函数接收参数用...arg
+    // 6. class类 （实现继承）
+    // 7. 数组的方法  find   findIndex   includes    Array.form()类数组转换为数组   flat嵌套数组转为一维数组
+</script>
+<!-- 常见问题 -->
+<script>
+    // 数组去重   for循环indexOf查找去重   set去重   for循环查找对象key值   数组reduce arr.reduce(function(prev,cur,index,arr){return}, init);  prev上一个回调的返回值或者初始值（没有初始值就是第一个元素，cur就是第二个元素），cur当前元素，init初始值，init不传prev默认第一项，cur作为第二项；
+    // 1.利用ES6 Set去重 2.利用for嵌套for，然后splice去重  3.利用indexOf去重 
+    // 4.利用sort() 利用sort()排序方法，然后根据排序后的结果进行遍历及相邻元素比对。
+    // return 的结果小于 0 ，那么 a 会被排列到 b 之前
+    // return 的结果等于 0 ， a 和 b 的相对位置不变
+    // return 的结果大于 0 ， b 会被排列到 a 之前
+    // 5.利用对象的属性不能相同的特点进行去重 //两个true直接去掉了，NaN和{}去重
+    // 6.利用includes   if( !array.includes( arr[i]) ) {//includes 检测数组是否有某个值   //{}没有去重
+    // 7.利用hasOwnProperty判断是否存在对象属性   //所有的都去重了
+    // function unique(arr) {
+    //     if (!Array.isArray(arr)) {
+    //         console.log('type error!')
+    //         return
+    //     }
+    //     var arrry = [];
+    //     var obj = {};
+    //     for (var i = 0; i < arr.length; i++) {
+    //         if (!obj[arr[i]]) {
+    //             arrry.push(arr[i])
+    //             obj[arr[i]] = 1
+    //         } else {
+    //             obj[arr[i]]++
+    //         }
+    //     }
+    //     return arrry;
+    // }
+    // var arr = [1, 1, 'true', 'true', true, true, 15, 15, false, false, undefined, undefined, null, null, NaN, NaN, 'NaN', 0, 0, 'a', 'a', {}, {}];
+    // console.log(unique(arr))
+    // 8. var newArr = arr.reduce(function (prev, cur) {
+    //     prev.indexOf(cur) === -1 && prev.push(cur);
+    //     return prev;
+    // },[]);
+    function unique(arr) {
+        var obj = {};
+        return arr.filter(function(item, index, arr) {
+            return obj.hasOwnProperty(typeof item + item) ? false : (obj[typeof item + item] = true)
+        })
+    }
+    var arr = [1, 1, 'true', 'true', true, true, 15, 15, false, false, undefined, undefined, null, null, NaN, NaN, 'NaN', 0, 0, 'a', 'a', {}, {}];
+    console.log(unique(arr))
+        // [{data: [1,2,3]}, [3,4,[5,6,[7,{data: [8,9]}]]]]  [1,2,3,3,4,5,6,7,8]
+    function fn(arr) {
+        var result = [];
+        console.log(arr)
+        for (let i = 0; i < arr.length; i++) {
+            const ele = arr[i];
+            console.log(ele)
+            if (Object.prototype.toString.call(ele) === '[object Object]') {
+                for (const key in ele) {
+                    console.log(ele, key, ele[key])
+                    result = result.concat(fn(ele[key]));
+                }
+            } else if (Object.prototype.toString.call(ele) === '[object Array]') {
+                result = result.concat(fn(ele));
+            } else {
+                result.push(ele)
+            }
+
+        }
+        return result;
+    }
+    console.log(fn([{
+                data: [1, 2, 3]
+            },
+            [3, 4, [5, 6, [7, {
+                data: [8, 9]
+            }]]]
+        ]))
+        // 冒泡排序  ！！！algorithm文件中！！！
+        // 快速排序  ！！！algorithm文件中！！！
+        // 多维数组和一维数组之间的转化 多维数组查找 ! ！！algorithm文件中！！！
+        // 深拷贝与浅拷贝（浅拷贝只复制对象的一层 深拷贝全部复制）
+        // 浅拷贝 Object.assign({}) 或者 新建对象赋值
+        // （json.parse(json.stringify)有些许问题 无法拷贝函数 正则 undefined 需要循环递归处理深拷贝） ！！！clone.js！！！
+        // json.stringify 数组中包含undefined 函数 symbol，返回null  -----  JSON.stringify([1,undefined,function(){},Symbol()]);    //  "[1,null,null,null]"
+        // 对象中包含的话，自动忽略不返回该项  ----  JSON.stringify({a:1, b:undefined, c:function(){}, [Symbol()]:1});    //  "{"a":1}"
+        // call和apply（修改this指向 写法不同 a.call(b) a的this指向b） 自己写一个.call 和 new构造函数
+        // 1<3<2结果 true   1<3 true 转换1，1<2 true 
+        // 0.1+0.2结果  浏览器二级制有小数点  取两位小数 或者 判断小数个数 * 10*n转为整数，再除以10*n
+        // 数组for   forEach   for of  (forEach无法使用break continue return跳出循环 可以使用try{}catch(){}跳出错误 for of没有索引) （正常情况下for循环和forEach循环删除数组会有索引问题 for循环可以使用 i-- 或者 倒循环 最好使用filter  forEach就没有办法操作是数组）
+        // for in和for of  for in可以循环对象和数组和字符串，得到的是key和索引下标， for of循环数组得到的是数组或者字符串的项，for of可以循环Map和Set
+        // map（函数的返回值组成新的数组 改变数组的内容 长度不变） filter （过滤原数组中符合条件的项 返回新数组 不改变数组的内容 长度改变）
+        // some（数组中只要有一个满足条件 返回true） every（数组中只要有一个不满足条件 返回false）
+        // localStorage和sessionstorage和cookie的区别  localStorage永久存储除非手动清除 多个页面之间可以共享  sessionstorage页面关闭清除 页面之间不可以共享  cookie设置过期时间，浏览器和服务器之间相互传递（前端需要设置参数，每次请求头中可以携带cookie传递到后端 后端读取后可以修改cookie 并且可以在返回头中设置set-cookie属性前端在浏览器可以查看）
+        // 跨域的方式？
+        // jsonp跨域 proxy代理 nginx反向代理 后端cors websocket即时通讯
+        // 图片懒记载的原理 (src='default.jpg' data-src='url'    scroll距离 + 窗口高度 > 元素距离顶部高度  &&  scroll距离 + 窗口高度 - 元素距离顶部高度 < 窗口高度 || scroll距离 < 元素距离顶部高度  &&  防抖事件)
+        // 两个数组合并为一个数组  concat   [...[], ...[]]
+        // 观察者模式和订阅发布模式
+        // 深度优先遍历 广度优先遍历（了解） ！！！algorithm文件中！！！
+        // MVC 和 MVVM ？ 
+        // MVC（view（视图） model（模型 处理数据） control（控制器）） 用户操作视图view，control接收view指令更新model，model变化后更新view
+        // typeof 和 instanceof的缺点？
+        // typeof 判断数组 对象 null 都是返回object类型  
+        // ['1'] instanceof object     {id: 1} instanceof object   数组和对象都是返回true  （instanceof判断A是否是B的实例，原型链查找A.__proto__(.__proto__) == B.prototype）
+        // 使用 Object.prototype.toString.call 解决  原理是？
+        // i++和++i ？
+        // i = 1  var a = i++ 先赋值 再+1   a = 1   i = 2
+        // i = 1  var a = ++i 先+1 再赋值   i = 2   a = 2 
+        // 接口206 文件下载断点续传 从文件已经下载的字节开始下载上传
+        // null和undefined的区别
+        // null变量有值但是值为空 undefined变量声明但是未初始化
+        // Math.round() 和 toFixed() 的缺点  
+        // Math.round()四舍五入返回整数，负数.5 向上+1
+        // toFixed .5 后有值 +1， 没有值前面奇数不+1，偶数+1
+        // Math.round缺点修改 Math.round((num * 100).toFixed(2)) / 100    toFixed解决精度问题 负数的话转为正数
+        // 不四舍五入 num.toFixed(3).slice(0,-1)
+
+    // Math.floor向下取整  Math.ceil 向上取整
+    // Math.random()随机数生成范围函数封装
+    // Math.floor(Math.random()*(max - min + 1) + min)
+    // iframe优缺点
+    // 模块分离，便于更改，把嵌入的网页原样展现出来
+    // 阻塞页面加载，影响网页加载速度
+    // 样式和脚本需要额外调用,增加页面请求，增加http请求，不利于搜索引擎优化
+    // target 和 currentTarget   addEventListener
+    // e.target 触发事件的元素（当前点击的元素）
+    // e.currentTarget 绑定事件的元素（捕获/冒泡阶段的元素）
+    // addEventListener第三个参数默认值false（冒泡阶段），true（捕获阶段）
+    // 阻止冒泡/捕获e.stopPropagation()，还有个e.stopImmediatePropagation()不仅阻止冒泡/捕获。还会阻止元素后续事件的执行
+    // CDN原理？
+    // 用户不需要从源站获取数据，通过CDN，用户选择最优的线路，
+    // CDN就是将数据缓存到离用户最近的地方，最快的获取数据，
+    // 减少源站负载压力，减少网络压力，避免用户请求阻塞
+    // websocket? 反正就是持续链接
+    // babel 和 polyfill
+    // babel转换语法（let const =>），polyfill转换api（promise map set）
+</script>
+<!-- 浏览器缓存 垃圾回收-->
+<script>
+    // 强制缓存
+    // 强制缓存优先级大于协商缓存，强制缓存设置no-cache浏览器会发请求协商缓存，设置no-store不走缓存；
+    // 强制缓存的from disk cache 和 from memory cache？ 首次进入200，刷新或关闭tab再次进入disk cache（硬盘），后面再刷新就memory cache（内存），
+    // Etag 和 If-None-Match  Etag服务端返回的code，下次请求放在请求头If-None-Match中，服务端比较；
+    // If-Modified-Since与Last-Modified Last-Modified最后修改时间和Etag同理，判断是否相同
+
+    // 浏览器垃圾回收机制 
+    // 全局变量不会被回收。
+    // 局部变量会被回收，也就是函数一旦运行完以后，函数内部的东西都会被销毁。
+    // 只要被另外一个作用域所引用就不会被回收（闭包）
+    // 局部变量被使用（闭包）下次闭包重定义回收上一个闭包或者=null
+    // 对象没有被其他变量引用，对象会被回收
+</script>
+<!-- xss和csrf -->
+<script>
+    // xss：注入脚本上传至服务器，用户浏览网站后可以获取用户的cookie信息，修改网站，篡改网站内容，跳转到其他链接等，常见于留言框这些输入框。
+    // 预防方法：1. 过滤掉script onerror onclick这些标签 2. 对用户输入数据转码
+    // csrf：诱导用户打开第三方网站，调用原网站的接口发送请求，接口会携带原网站cookie信息
+    // 预防方法：使用token
+    // 区别是csrf需要登录，第三方网站调用接口，xss不需要登录，通过js脚本注入修改网站。
+</script>
+<!-- 弱引用 WeakMap -->
+<script>
+    // WeakMap 的key是对象格式是弱引用，只要外部的引用消失，所对应的键值对就会自动被垃圾回收清除。
+    // let obj = {name: 'jack'}
+    // let obj1 = obj; // 这里是复制了引用地址
+    // obj = null
+    // console.log(obj1, 'asd') // obj虽然=null，但是obj1的引用地址还在，所以对象{name: 'jack'}不会被垃圾回收
+
+    // let obj2 = {id: 1}
+    // const aMap = new WeakMap([[obj2, 'sina']])
+    // obj2 = null 
+    // WeakMap键的{id: 1}，将会被垃圾回收器从内存中移除，对应的value也会被回收
+
+    // WeakMap可以用来绑定DOM和函数事件，监听函数放在WeakMap中，当Dom删除时对应的函数也会被回收
+    // const listener = new WeakMap()
+    // function func1(){}
+    // function func2(){}
+    // listener.set(ele1, func1).set(ele2, func2)
+    // ele1.addEventListener('click', listener.get(ele1), false)
+    // ele2.addEventListener('click', listener.get(ele2), false)
+</script>
+<!-- indexdb -->
+<script>
+</script>
+
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input class="view1" type="text">
+</body>
+<script>
+    // 订阅器
+    class Dep {
+        constructor() {
+            this.deps = []; // 当前属性的订阅者数组
+        }
+        // 当前的Watcher，不需要构造函数，直接就获取，可以理解为对象中的一个属性；
+        // 属性获取的时候会触发数据劫持的get，会将Dep对象中的target添加到订阅者数组
+        static target = null; 
+        // 添加订阅者函数，数据劫持get中调用
+        addDep(sub){
+            this.deps.push(sub)
+        }
+        // 通知订阅者执行更新事件，数据劫持set中调用
+        notify(){
+            console.log(this.deps)
+            for (let i = 0; i < this.deps.length; i++) {
+                this.deps[i].update();
+            }
+        }
+    }
+    // 监听器
+    function define(data, key, val){
+        var dep = new Dep(); // 创建一个构造器dep
+        // 对数据进行劫持
+        Object.defineProperty(data, key, {
+            enumerable: true,
+            configurable: true,
+            // 获取属性时会触发，并将Watcher也就是Dep.target添加到订阅器数组
+            get(){
+                if(Dep.target) {
+                    dep.addDep(Dep.target)
+                }
+                return val
+            },
+            // 修改属性会触发，执行订阅者更新函数
+            set(newVal){
+                console.log(newVal)
+                val = newVal;
+                dep.notify()
+            }
+        })
+    }
+
+    var object = {
+        value: '123'
+    }
+    // 对象循环创建监听器
+    function observe(object){
+        for (const key in object) {
+            // 对象循环创建监听器
+            define(object, key, object[key])
+        }
+    }
+    observe(object);
+
+    class Watcher {
+        constructor(obj, key, fn) {
+            this.obj = obj;
+            this.key = key;
+            this.fn = fn;
+            // 构造一个Watcher，构造函数中执行get方法
+            this.value = this.get();
+        }
+        update(html) {
+            this.value = this.obj[this.key];
+            this.fn(this.value); // 回调函数执行，元素赋值 .call
+        }
+        // get方法主要是获取到当前的订阅者Watcher，包括它挂载的对象属性以及它的回调函数
+        get(){
+            Dep.target = this; // 获取到当前的Watcher
+            var value = this.obj[this.key]; // 调用Watcher中的属性触发数据劫持中的get方法，方法中会拿到这个Wather，就是this，Dep.target = null会等到劫持完事再执行（同步）
+            Dep.target = null; // 清空target，下一个Watcher还要赋值
+            return value;
+        }
+    }
+    // 初始化订阅者Watcher
+    function initWatcher(el, object, key){
+        el.value = object[key]; // 初始化value
+        // 构造函数Watcher
+        new Watcher(object, key, function(val){
+            el.value = val;
+        });
+    }
+    let view1 = document.querySelector('.view1');
+    initWatcher(view1, object, 'value');
+    view1.addEventListener('change', function () {
+        object.value = this.value
+    })
+</script>
+</html>

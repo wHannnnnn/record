@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<!-- vue相关 -->
+<script>
+    // 1. data为什么是函数return？
+    // 目的是多次引用同一组件 修改data数据相互不影响（每复用一次组件，就会返回一份新的data）
+    // 把对象用函数包裹起来 retrun 出去以后为啥就能实现我们想要的效果，因为在js中使用函数包裹起来数据的话，他是属于局部变量，不会像全局变量一样容易被污染，
+    //当data是一个函数的时候，他的每一个组件都是一个单独的作用域被包裹起来，相互独立，互不影响
+        //1.不使用retrun包裹数据会使得数据全局化，会造成变量污染。
+       // 2.在vue中使用retrun包裹的数据中的变量只会在当前的组件内有效，不会影响到其他的组件中
+    // 2. key的作用？diff？
+    // 3. computed和watch的区别？
+        // 计算属性和监听属性
+        // computed定义一个值并return返回，这个值不允许在data和props中定义，如果这个值相关联的数据没有变化 会优先从缓存中读取 不需要再次执行
+        // watch是监听data props中已有的数据，可以获取新旧值的变化，对象属性修改无法监听，监听需要deep深度监听，
+        //纯数组值如果没有变化不会触发watvh，如果监听的值只要调用了$set不管是否有的变化就会重新执行watch
+    // 4. vuex的使用？
+        // vuex管理全局状态，但是在页面刷新后会重置，需要缓存的数据可以结合localstorage或者sessionstorage使用
+        // 分为state getter mutation action 还有个module（模块）
+        // 可以定义模块集合方便管理 在vuex中引用 modules：{a：module1， b: module2}  module1 = { state: () => ({ ... }),mutations: { ... },actions: { ... }getters: { ... }}
+        // state就是数据 getter过滤数据 mutation操作state的方法   action处理异步（action不能直接操作state 必须调用mutation中的commit方法）
+        // vue定义mutation处理同步操作 在mutation中修改state应该是立即生效的   action处理异步操作 其实这是个概念 不是说在mutation中处理异步就会报错，是不会报错的！
+        // 使用方法： state： this.$store.state  mapstate (computed中定义...mapstate)
+        //   mutation： this.$store.commit  mapMutation （methods中定义..mapMutations）
+        //   action: this.$store.dispatch  mapActions (同上)
+    // 5. vue中如何检测到对象属性的添加或删除让页面更新？
+        // object.defineProperty可以监听对象的变化      不能监听对象的添加和删除    (可以监听到数组下标的变化、添加和删除，但是为什么没有通知订阅者更新页面？)
+        // this.$set   Vue.set   Object.assign 数组push filter等方法
+    // 5.1 Vue.set的原理？ 
+        // 如果是数组调用重写的splice方法，target.splice(key, 1, val)，key是数组索引 传三个参数（第三个参数是替换的值），重写的splice方法中会判断是否有第三个参数，有的话就重新监听这个key并通知订阅者更新，没有就直接通知更新（区分Vue.delete）
+        // 如果是对象，重新监听这个属性并通知订阅者更新
+    // 5.2 Vue.delete的原理？
+        // 原理与Vue.set很像，数组也是splice，target.splice(key, 1)，不传第三个参数，重写的方法里没有第三个参数就不会重新监听属性，然后通知订阅者更新
+        // 对象的话直接调用delete target[key]删除方法，然后订阅者更新
+    // 5.3 Vue对数组的重写？重写了七个方法，调用会触发监听属性（Vue.set）和订阅者更新
+    // 6. vue的双向绑定实现原理？
+        // 数据劫持 + 发布订阅模式    数据变化 属性劫持Object.defineProperty后 set写入数据 发布者发布指定事件通知订阅此事件的订阅者执行页面更新 // 下面有！！！
+    // 7. 首屏优化？
+        // 路由懒加载（ () => import(../../) ） 
+        // https://router.vuejs.org/zh/guide/advanced/lazy-loading.html#%E6%8A%8A%E7%BB%84%E4%BB%B6%E6%8C%89%E7%BB%84%E5%88%86%E5%9D%97
+        // cdn外部加载资源（vue router axios） cdn浏览器多线程加载，避免app.js内容一次加载过大
+        // 减少图片使用 懒加载等
+        // 第三方库按需引入
+        // productionSourceMap设置为false 避免生成map文件
+    // 8. history模式，vue默认hash模式 url里会有# 
+    //可以在router设置mode：history，页面没有#页面会404，相当于请求接口，需要后端配合。
+    // 9. 生产环境和开发环境文件路径配置：在.env.development 和 .env.production文件中设置VUE_APP_XXX = '111.22.333'，通过 process.env.VUE_APP_XXX获取参数，vue会判断环境  （process.env.NODE_ENV获取当前环境）
+    // 10. keepalive 页面缓存如何使用 组件需要定义name   keepalive标签里的include是个数组或逗号分隔的字符串（是组件的名字 需要缓存的组件） enclude（不需要缓存的组件）
+            // keepalive 缓存原理 keepalive通过render返回Vnode渲染，keepalive判断当前组件name是否在include中， 没有直接返回Vnode，有的话判断缓存中是否存在，存在就直接将缓存的Vnode返回，不存在就在缓存中添加当前组件的Vnode并返回
+    //         beforeRouteLeave(to, from, next) {
+    //     const status = to.path == '/detailsIndex'
+    //     this.$store.commit('updateAliveList', { name: 'productList', status: status });
+    //     setTimeout(() => {
+    //         next();
+    //     }, 0)
+    // },
+    
+    // updateAliveList(state, { name, status }) {
+    //   const index = state.keepAliveList.indexOf(name);
+    //   if (status) {
+    //     index < 0 && state.keepAliveList.push(name);
+    //   } else {
+    //     index >= 0 && state.keepAliveList.splice(index, 1);
+    //   }
+    // },
+            // 11. directive 自定义指令 用来操作dom （拖拽 聚焦）
+    // 12. 组件之间的传值
+    // 13. 阻止事件冒泡 默认行为的方法  @click.stop @click.prevent
+    // 13.1  @click.native 修饰符 监听组件根元素的原生事件，不加不好使
+    // 14. vue生命周期 
+        // beforeCreate（vue实例创建前 初始化）  created（vue实例创建完成 可以获取操作data   ：调接口）  
+        // beforeMount（dom加载完成前） mounted（dom加载完成   ：操作dom）
+        // beforeUpdate（组件更新前）  updated(组件完成更新 ：可以判断页面是否操作过)
+        // beforeDestroy（组件销毁前  ：清除定时器 解绑事件 销毁事件 销毁$on（vue-bus）） destroyed（组件销毁完成）
+    // 16. v-if 和 v-show
+        // v-show 是 display属性切换
+        // v-if 是 删除节点
+    // 17. vue-router的原理？
+        // hash 和 history
+        // hash通过#是URL的锚点，通过监听锚点改变页面数据，不跳转连接
+        // history 通过history.pushState api完成URL跳转不刷新页面
+            // 手动刷新相当于调接口，服务端需要配置对应的路由
+    // 18. v-model的原理 <input v-model='asd'> 等同于 <input :value="asd" @input="asd = $event.target.value" /> 绑定个属性 @input赋值修改属性
+    // 19. slot 子组件可以多个默认插槽，内容根据父组件会重复显示，父组件只能定义一个template默认或者内部默认插槽，多个的话取最后一个
+        // 使用v-slot:name = 'scope' 获取子组件的数据
+    // 20. Mixin混入
+        // Mixin对象就是vue组件的api
+        // Mixin和组件的data和方法和计算属性冲突以组件中的数据优先，覆盖Mixin
+        // Mixin和组件的生命周期函数都会触发，Mixin中的生命周期 先于 组件中的生命周期触发
+    // 21. vue-bus原理
+        // 基于发布订阅模式  $on订阅消息 $emit发布消息
+        // class bus {
+        //     constructor(){
+        //         this.deps = {};
+        //     }
+        //     $on(name, fn){
+        //         this.deps[name] = this.deps[name] || [];
+        //         this.deps[name].push(fn);
+        //     }
+        //     $emit(name, ...args){
+        //         this.deps[name] && this.deps[name].forEach(callback => callback(...args));
+        //     }
+        // }
+        // B组件 bus.$on('bus1', function(...res){ console.log(res)});
+        // C组件 bus.$on('bus1', function(...res){ alert(res)});
+        // A组件中发布事件 bus.$emit('bus1', 1, 2, 3); 执行BC组件的回调
+        // 离开组件记得销毁，下次进入组件会再次添加重复执行回调函数
+    // 22. 虚拟DOM渲染
+        // function Element(vnode) {
+        //     this.tag = vnode.tag
+        //     this.props = vnode.props
+        //     this.children = vnode.children
+        // }
+
+        // Element.prototype.render = function () {
+        //     var el = document.createElement(this.tag) //创建DOM元素
+        //     var props = this.props
+
+        //     for (propName in props) {
+        //         var propVal = props[propName]
+        //         el.setAttribute(propName, propVal) //给DOM元素添加属性
+        //     }
+
+        //     var children = this.children || []
+        //     children.forEach(child => {
+        //         el.appendChild((child instanceof Element) ? child.render() : document.createTextNode(child))
+        //     })
+        //     return el
+        // }
+        // window.onload = function () {
+        //     const ul = new Element({ tag: 'ul', attrs: { id: 'list' }, children: [
+        //         new Element({ tag: 'li', attrs: { class: 'item' }, children: ['Item 1']}),
+        //         new Element({ tag: 'li', attrs: { class: 'item1' }, children: ['Item 2']}),
+        //         new Element({ tag: 'li', attrs: { class: 'item2' }, children: ['Item 3']}),
+        //     ]})
+        //     const ulRoot = ul.render();
+        //     document.body.appendChild(ulRoot);
+        // }
+    // 23. 父子组件生命周期加载流程
+        // 父beforeCreate 父created 父beforeMount 子beforeCreate 子created 子beforeMount 子mounted  父mounted
+        // 子组件更新过程：父子组件有通信 父 beforeUpdate 子beforeUpdate 子update  父update，其他的时候只修改 子beforeUpdate 子update 
+        // 父组件更新过程：父beforeUpdate->父updated
+        // activated 首次 父组件执行，第二次进入 子 => 父，deactivated 子 => 父
+    // 24.     Router.beforeEach 路由进入前
+            // Router.afterEach 路由离开前
+            // beforeRouterLeave 组件中方法 路由离开前
+            // beforeRouterEnter 组件中方法 路由进入前
+    // 25. $nextTick 可以理解为异步
+    // 26. css scoped局部样式，vue默认全局样式优先级大于局部样式，所以修改element组件样式的时候添加scoped无法修改，需要/deep/深度选择器修改
+    // 27. proxy接口代理原理？
+            // proxy 就是利用了 Node 代理，原理是因为服务器端没有跨域，
+            // 运行后基于Node搭建了一个本地服务器，将请求通过本地的Node服务器去代理，也就是浏览器发给自己的Node服务，Node服务再发给跨域的服务端，做一层代理
+    // 28. v-if和v-for为 什么不能同时？
+        // v-for比v-if更高优先级，先运行v-for的循环，然后在每一个v-for的循环中再进行v-if的条件对比，会造成性能问题，影响速度
+    // 29. diff算法？ 
+            // 新旧vnode比较的过程（通过key），尽量移动复用修改dom节点，无法复用再添加以及删除，两条vnode分别以头尾定义：
+                // oldStartIndex，oldEndIndex，oldStartVnode，oldEndVnode
+                // newStartIndex，newEndIndex，newStartVnode，newEndVnode
+                // patchVnode(该方法进行节点复用处理)
+                // 循环设置边界条件，startIndex <= endIndex
+
+            // 1. 首先判断 首节点是否相同，相同的话执行patchVnode，oldStartIndex和newStartIndex 分别 + 1
+            // 2. 判断尾节点是否相同，相同的话执行patchVnode，oldEndIndex和newEndIndex 分别 - 1
+            // 3. 判断oldStartVnode 是否等于 newEndVnode，说明oldStartVnode跑到了oldEndVnode后面，将对应的dom节点移动到oldEndVnode后面（insertBefore方法  oldEndVnode下一个节点前），oldStartIndex + 1，newEndIndex - 1
+            // 4. 判断oldEndIndex 是否等于 newStartIndex，说明oldEndVnode跑到了oldStartVnode前面，将dom节点移动到oldStartVnode前面，oldEndIndex - 1，newStartIndex + 1
+            // 5. 都不相同，没有节点复用。在旧节点中通过key查找新节点key，新节点key不存在或者在老节点中找不到就在oldStartVnoded节点前插入新节点，并且newStartIndex + 1，找到了将节点移动到oldStartVnode前 newStartIndex + 1
+            // 6. 循环结束 oldStartIdx > oldEndIdx 说明旧节点遍历完，新节点多出来剩下的需要创建dom，（新建newStartIdx 到 newEndIndex的所有节点）
+                // newStartIdx > newEndIdx 新节点遍历完，小于旧节点个数，旧节点多出来的dom需要删除，（移除 oldStartIdx 到 oldEndIdx 的所有节点）
+    // 30. $attrs $listeners 组件多层传值，和props接受的数据不重复，子组件用v-bind="$attrs" v-on="$listenens"传递下一个子组件（就是绑定属性和方法），下一个子组件直接$emit
+            // inheritAttrs: false 子组件设置后标签中不显示$attrs的属性
+    // 31. vue.use 原理？
+        // Vue.use是通过initUse这个方法初始化的 ，Vue.use接受一个参数plugin，方法检测了installedPlugins这个数组中是否已经包含想要注册的组件，可知插件只允许被注册一次，二次注册是无效的。
+        // 调用toArray将转入的参数转换成数组
+        // 把当前Vue对象this插入转化后的数组前
+        // 判断plugin中install是否是一个方法，如果是，则传入plugin及转化后的数组；此外，如果plugin本身就是一个方法，则传入转化后的数组，随后执行这个方法，由此可知Vue.use(插件)实际上会调用插件的install方法，并且调用use的时候是可以传参数的。         
+        // 注：以上还可以知道，vue只会对plugin中的两种情况处理，即要么plugin中有install函数，要么plugin本身就是一个函数。
+        // 将注册后的插件推进installedPlugins，避免重复注册，返回当前实例，代码执行结束。
+    // 32. vue.observable 实现 ？ 异步 ？ 多组件 ？ todo实现
+</script>
+</html>

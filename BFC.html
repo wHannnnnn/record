@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         .container4{
+           /* font-size: 0; */
+        }
+        .container4 .left{
+            width: 100px;
+        }
+        .container4 .left,.container4 .right{
+            display: inline-block;
+            font-size: 16px;
+            vertical-align: top;
+            border: 1px solid;
+            box-sizing: border-box;
+        }
+        .container4 .right{
+            width: calc(100% - 100px);
+        }
+        .clearfix:after {
+            content: "";
+            display: block;
+            height: 0;
+            clear: both;
+            visibility: hidden;
+        }
+
+        .clearfix {
+            /* 触发 hasLayout */
+            zoom: 1;
+        }
+    </style>
+</head>
+<body>
+    <div style="border: 1px solid #000;overflow: hidden;">
+        <div>
+
+            <div style="height: 100px;width: 100px;float: left;background: lightblue">我是一个左浮动的元素</div>
+        </div>
+        <div>
+            <div style="width: 200px; height: 200px;background: #eee;">我是一个没有设置浮动, 
+                也没有触发 BFC 元素, width: 200px; height:200px; background: #eee;</div>
+                <div style="width: 200px; height: 200px;background: #eee;">我是一个没有设置浮动, 
+                    也没有触发 BFC 元素, width: 200px; height:200px; background: #eee;</div>
+        </div>
+        <div style="height: 100px;width: 100px;float: right;background: lightblue">我是一个左浮动的元素</div>
+    </div>
+    <div><div style="width: 200px; height: 200px;border: 1px solid #000;margin-bottom: 10px"></div></div>
+    <div style="width: 200px; height: 200px;border: 1px solid #000;margin-top: 10px"></div>
+    <div class="container container4">
+        <div class="left">左边左边左边左边左边左边左边左边左边左边</div>
+        <div class="right">右边右边右边右边右边右边右边右边右边右边右边右边右边右边右边右边右边</div>
+    </div>
+</body>
+<script>
+    // 如何触发BFC?
+        // float不为none
+        // position不为relative和static（position的值为absolute或者fixed）
+        // overflow为auto、scroll和hidden（overflow的值不为visible）
+        // display的值为inline-block、inline-flex、flex、flow-root、table-caption、table-cell。
+    // BFC可以解决什么问题？
+        // 解决浮动元素令父元素高度坍塌的问题，清除浮动
+        // 文字包裹浮动元素，文字元素设置属性
+        // 外边距重合问题
+</script>
+</html>

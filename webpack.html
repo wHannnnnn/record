@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<!-- webpack -->
+<script>
+    // webpack主要属性？
+    // entry（入口文件） 
+    // output（出口文件）  
+    // module（模块处理需要下载引入对应的 loader 模块 主要是es6解析 sass解析 图片解析为base64文件）  loader打包前对文件的转化处理？ plugins打包中对文件优化？
+        // url-loader：处理css js图片提取到images文件夹中，设置limit值，图片小于值转为base64被bundle.js引入，大于limit值配置hash放到文件中（为什么hash，不同文件夹下相同文件名打包之后放在一个文件夹下，页面引入两个同名图片显示相同）
+        // css-loader：解析.js文件中引入css文件并让样式生效，对@import 和url() 进行处理，处理css文件中图片相对路径问题；（图片路径转为../images/aaa.png）
+        // babel-loader；es6解析
+        // html-withimg-loader：解析html中的图片路径
+        // [“style-loader”, “css-loader”, “sass-loader”] 从右往左调用  sass-loader将.less或.scss文件转换成css，css-loader加载css文件，style-loader用于将打包后的css代码<style>标签形式添加到页面头部
+    // plugins （例如:
+        // 1.css文件处理之后通常会放在js文件中，将js和css文件解析成不同文件，分离js和css文件，避免js文件过大（提取css文件，压缩css）； // 相对路径
+        // 2.生成html并引入对应的js文件，压缩js文件，去掉debugger console 注释
+        // 3.每次打包删除上一次的dist文件 
+        // 4.在webpack.prod.js和webpack.dev.js中分别配置生产环境 开发环境全局常量）
+    // optimization  (优化构建 分割代码)
+    // 热更新？ websoket + JSONP
+</script>
+</html>

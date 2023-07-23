@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    html {
+        height: 1600px;
+        overflow: auto;
+    }
+    
+    .arrow {
+        position: relative;
+    }
+    
+    .arrow:before,
+    .arrow:after {
+        position: absolute;
+        content: '';
+        width: 0;
+        height: 0;
+        border: 10px solid transparent;
+    }
+    
+    .arrow:before {
+        border-left: 10px solid #333;
+    }
+    
+    .arrow:after {
+        left: -2px;
+        border-left: 10px solid #fff;
+    }
+    
+    .asd:before {
+        content: '';
+        display: block;
+    }
+    
+    .asd:after {
+        content: '';
+        display: block;
+    }
+    /* .brother+.son {
+        background-color: #333;
+    } */
+    /* #aaa {
+        width: 10px;
+        background-color: tomato;
+    } */
+    /* #father #aaa {
+        background-color: rgb(238, 130, 130);
+    } */
+    
+    #girl .han {
+        background-color: rgb(222, 238, 130);
+    }
+    
+    #aaa {
+        background-color: rgb(238, 130, 130);
+    }
+</style>
+
+<body>
+    <div class="arrow"></div>
+    <div style="width: 200px;">
+        <span style="display: inline-block; height: 40px">asd</span>
+    </div>
+    <div class="asd" style="width: 300px; border: 1px solid; height: 400px; display: flex;flex-wrap: wrap;">
+        <div style="
+        height: 100px;
+        width: 100px;
+        background: red;
+        box-sizing: border-box;margin: 10px"></div>
+        <div>
+            <div style="
+                    height: 100px;
+                    width: 100px;
+                    background: red;
+                    box-sizing: border-box;margin: 10px"></div>
+        </div>
+    </div>
+    <div id="father" style="background:rgb(56, 56, 56);">
+        <div id="son" style="margin-top:50px;">son</div>
+    </div>
+    <div id="father" style="background:#eee;">
+        <div id="son" style="margin-top:50px;">son</div>
+    </div>
+    <div style="position: absolute;left: 50%;top:50%">asd</div>
+
+    <div style="display: flex;justify-content: space-between">
+        <div></div>
+        <div style="width: 30px;border: 1px solid #000;"></div>
+        <div style="width: 30px;border: 1px solid #000;"></div>
+        <div style="width: 30px;border: 1px solid #000;"></div>
+        <div></div>
+    </div>
+    <div style="position:relative;width:300px;height:300px;background-color: yellowgreen;">
+        <div style="position:absolute;width:100px;height:100px;left: 0;right: 0;top: 0;bottom: 0;background-color: tomato;margin: auto;">
+        </div>
+    </div>
+    <div style="display: flex;width: 400px;height: 400px;justify-content: space-between;background-color: violet;">
+        <div style="width: 100px;height:100px;background-color: teal;align-self: flex-start;"></div>
+        <div style="width: 100px;height:100px;background-color: teal;align-self: center;"></div>
+        <div style="width: 100px;height:100px;background-color: teal;align-self: flex-end;"></div>
+    </div>
+    <div class="father" style="width: 200px; height: 200px; display: flex" id="father">
+        <div id="girl" class="boy" style="width: 100px;height: 100px;">
+            <div id='aaa' class="han" style="width: 100px;height: 100px;"></div>
+        </div>
+        <div class="" style="width: 100px;height: 100px;"></div>
+        <div class="son" style="width: 100px;height: 100px;"></div>
+        <!-- <div class="brother" style="width: 100px;height: 100px;"></div> -->
+    </div>
+</body>
+<script>
+    // 行内元素分为替换元素和非替换元素 
+    // 1. flex布局  常用属性
+    //  flex-direction 主轴排列方向
+    //  flex-wrap 换行 
+    //  justify-content 主轴对齐方式
+    //  align-items  交叉轴对齐方式
+    //  align-self: flex-start/center/flex-end; 元素内的某个项的对齐方式
+    //  order 排序
+    //  flex：1 相当于flex: 1 1 0的简写 包括三个属性  flex-grow（剩余空间分配） flex-shrink（缩放比例） flex-basis（初始值 默认0%） （详细解释）
+    // flex-shrink比例计算 
+    // flex-basis 优先级大于width，小于min-widrh max-width
+    // 问题：梯形布局   左侧固定右侧自适应   垂直水平居中
+    // 2. 不定宽高元素水平垂直居中
+    //    1). flex布局；
+    //    2). position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)  
+    //    3). position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto;
+    // 3. 左侧固定 右侧自适应     两端固定   中间自适应
+    // 4. 盒模型 box-sizing: border-box 和 content-box
+    // content-box  （padding和border不算在元素width里）（元素设置width: 200 padding: 10, border: 1它的实际宽度是222，内容宽度是200)
+    // border-box   （padding和border算在元素width里）（元素设置width: 200 padding: 10, border: 1它的实际宽度是200，内容宽度是178)
+    // 6. position的四个属性
+    // 7. z-index 子元素的z-index比较大小
+    // 8. 重排(回流、重构)和重绘  重排一定会重绘 重绘不一定会重拍
+    // 重绘是一个元素外观改变，不影响元素本身相对于浏览器文档的位置
+    // 重排包括添加删除dom，元素大小位置变化，页面初始化，浏览器大小变化，叫做重排，完成重排后，要将重新构建的渲染树渲染到屏幕上，完成重绘，所以重排一定会重绘！
+    // 绝对定位固定定位元素脱离文档流，自身重排，不会引起其他元素重排
+    // transform不会重排重绘
+    // 9. display:none     visibility: hidden;    opacity: 0  区别？
+    // display:none 不占位隐藏
+    // visibility: hidden  占位隐藏，无法点击元素等事件
+    // opacity: 0  改变透明度，可以调用点击元素等事件
+    // 10. 父元素overflow:hidden，子元素定位是否隐藏？
+    // 相对定位relative隐藏，fixed不隐藏，absolute要看上级父元素是否设置了定位（除了static），父元素设置了定位子元素超出隐藏修改。
+
+    // 11. BFC 独立作用域
+    // 如何触发BFC?
+    // float不为none
+    // position不为relative和static（position的值为absolute或者fixed）
+    // overflow为auto、scroll和hidden（overflow的值不为visible）
+    // display的值为inline-block、inline-flex、flex、flow-root、table-caption、table-cell。
+    // BFC可以解决什么问题？
+    // 解决浮动元素令父元素高度坍塌的问题，清除浮动
+    // 文字包裹浮动元素，文字元素设置属性
+    // 外边距重合问题
+    // 12. display: inline-block 元素底部会出现留白4px
+    // 解决方案：vertical-align属性
+    // 父元素font-size: 0
+    // 13. display: inline-block 相邻元素也会有空隙
+    // 解决方案：
+    // 父元素font-size: 0
+    // 父元素word-spacing: -5px
+    // 14. 外边距合并，上下元素margin合并问题
+    // 解决方案：包父元素overflow:hidden
+
+    // 15. 外边距合并，父子元素中子元素margin-top/bottom父元素也会跟着移动
+    // 解决方案：
+    // 子元素display: inline-block  flex；
+    // 父元素overflow: hidden / auto
+    // 父元素display: flex / inline-block / inline-table 等
+    // 父元素加padding任意值
+    // 父元素border
+    // 父元素position: absolute / fixed
+    // 父元素浮动
+    // 16. 元素选择器
+    // > 子元素选择器，一级子类
+    // + 相邻兄弟选择器，紧跟元素后的第一个元素
+    // ~ 所有兄弟选择器，元素后的所有兄弟元素
+    // [attr*='val'] 包含   匹配属性包含值 包含部分字段
+    // [attr~='val'] 包含   匹配属性包含值 包含某个词
+    // [attr^='val'] 以属性开头
+    // [attr$='val'] 以属性结尾
+    // 17. 清除浮动
+    // clear: both 浮动元素下加个空白div设置clear: both（其实是浮动元素的下面元素清除浮动）
+    // 伪元素:after 浮动元素父级加clearfix，clear: both一种写法，浮动元素的父级加clearfix类，:after设置clear: both
+    // overflow: hidden 浮动元素的父元素加overflow: hidden
+</script>
+
+</html>

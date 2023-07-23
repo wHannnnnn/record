@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul id="list">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+    </ul>
+    <!-- css -->
+        1. 元素垂直水平居中的方式？
+        2. flex布局？有哪些常用的属性？flex:1是哪三个属性？flex:1 三个属性的默认值是什么？
+        3. BFC是什么？有哪些触发条件？解决什么问题？
+        4. 元素左侧固定，右侧自适应布局？
+        5. 定位有哪些？
+        6. 清除浮动方法？
+        7. 元素隐藏的方式？区别是什么？
+        8. rem布局的原理？
+        9. 父元素overflow: hidden子元素定位是否显示？
+        10. z-index层级？
+        11. 盒模型？
+    <!-- js -->
+        1. 事件循环机制？宏任务、微任务？
+        2. 判断事件类型的方法？有什么缺点？instanceOf原理？
+        3. es6用过哪些？var const let？promise是什么？
+        4. promise和async和await有什么区别？
+        5. promise.all 和 promise.race是什么？可以自己实现不？
+        6. promise实现原理？（难一些）
+        7. 箭头函数和普通函数的区别？
+        8. 闭包是什么？有什么作用？在那里用过？
+        9. 原型和原型链是什么？继承有哪些？优缺点？
+        10. 数组有哪些方法？map和filter？
+        11. 浏览器输入 url 到渲染页面的详细过程？
+        12. sessionStorage、localStorage、cookie?
+        13. 缓存？强制缓存和协商缓存？页面刷新和深度刷新对缓存是否影响？
+        14. 深拷贝和浅拷贝？
+        15. 实现new？ call？
+        16. 防抖节流？应用场景？
+        17. CDN原理？图片懒加载原理？
+        18. webpack配置过哪些？
+        19. 内存泄漏？
+    <!-- vue -->
+        1. vue生命周期及作用？
+        2. 父子组件兄弟组件传值？父组件如何调用子组件方法？
+        3. vuex是什么？mutations和actions的区别？
+        4. vue-bus是什么？实现原理？
+        5. vue循环中key的作用？
+        6. 为什么v-for和v-if不能一起？
+        7. v-if和v-show的区别？
+        8. vue双向绑定的原理？
+        9. slot是什么？怎么用在哪用？
+        10. computed和watch的区别？
+        11. require和import的区别？
+        12. keep-alive的原理？
+        13. vue-router两种方式？原理是？
+        14. directives使用场景？
+        15. Mixin用过不？和组件中的数据方法冲突后优先级？
+        16. $nextTick 原理？
+        17. vue3.0新特性？数据劫持缺点？对数组是如何监听的？
+</body>
+<script>
+    // let arr = [1,2,3,4,5]
+    // let arr2 = [4,5,6,7,8]
+    // console.log(arr.filter(e => arr2.indexOf(e) === -1))
+
+    // var [a=3,b=a,c=3]=[1,2,undefined];
+    // console.log(a,b,c)
+
+    // var list=document.getElementById('list');
+    // var lis=list.querySelectorAll('li');
+    // list.replaceChild(lis[2],lis[1]);
+    // list.insertBefore(lis[1],list.children[2]);
+
+//     var c=1;
+//     function c(){
+//         console.log(c); // 1
+//         var c=3;
+//     }
+//     console.log(c); // 1
+//     // c(2);
+
+//     var name='kaivan';
+// (function () {
+//     if(typeof name==='undefined'){
+//         var name='chen';
+//         console.log(name);
+//     }else {
+//         console.log(name);
+//     }
+// })();
+// var a=10;
+// function test() {
+//     a=100;
+//     console.log(a);
+//     console.log(this.a);
+//     var a;
+//     console.log(a);
+// }
+// test();
+// if(!('a' in window)){
+//     var a=1;
+// }
+// console.log(a);
+// var val=1;
+// var obj={
+//     val:2,
+//     del:function () {
+//         console.log(this);
+//         this.val*=2;
+//         console.log(val);
+//     }
+// }
+// obj.del();
+// var name='kaivon';
+// var object={
+//     name:'chen',
+//     getNameFunc:function () {
+//         return function () {
+//             return this.name;
+//         }
+//     }
+// }
+// console.log(object.getNameFunc()())
+
+// var name='kaivon';
+// var object={
+//     name:'chen',
+//     getNameFunc:function () {
+//         var that=this;
+//         return function () {
+//             return that.name;
+//         }
+//     }
+// }
+// console.log(object.getNameFunc()())
+
+
+// var a=6;
+// setTimeout(function () {
+//     a=666;
+// },0)
+// console.log(a);
+
+// (function () {
+//     var a=b=c=3;
+//    console.log(a,b)
+// })();
+// console.log(window.c)
+// console.log(typeof  a==='undefined');
+// console.log(typeof b==='undefined')
+
+// var a=(function (foo) {
+//     return typeof foo.bar;
+// })({foo:{bar:1}});
+// console.log(a);
+
+
+// function f() {
+//     return f;
+// }
+// console.log(new f() instanceof f);
+// function A() {}
+// var b=new A();
+// A.prototype={
+//     n:2,
+//     m:3,
+// }
+// A.prototype.n=1;
+
+// var c=new A();
+// console.log(b.n,b.m);
+// console.log(c.n,c.m)
+
+// // console.log(Null.toString());
+// // console.log(undefined.toString());
+// console.log([1,2,3].toString());
+// // console.log(1.toString());
+// console.log(5..toString());
+
+
+// function aa(){
+//     console.log(a)
+// }
+// aa()
+// var a = 1
+
+// var obj = {
+//     bb:function(){
+//         var a = 3
+//         return aa
+//     }
+// }
+// obj.bb()()
+// console.log(1 + '2' + '2');
+// console.log(1 + +'2'+ '2');
+// console.log(+ '1' - +'1'+'2');
+// console.log('A' - 'B' + '2');
+// console.log('A' - 'B' + 2)
+// var a=666;
+// console.log(++a);
+// console.log(a++);
+// console.log(a);
+// var a={n:1};
+// var b=a;
+// a.x=a={n:2};
+// console.log(a.n,b.n);
+// console.log(a.x,b.x);
+//a  {n:2}
+//b  {n:1,x:{n:2}}
+// console.log(typeof a);
+// function a() {};
+// var a;
+// console.log(typeof  a);
+// var a;
+// var b='undefined';
+// console.log(typeof a);
+// console.log(typeof b);
+// console.log(typeof c);
+// var obj={n:1};
+// function fn2(a) {
+//     a.n=2;
+// }
+// fn2(obj);
+// console.log(obj.n);
+// var x=10;
+// function fn() {
+//     console.log(x);
+// }
+// function show(f) {
+//     var x=20;
+//     fn();
+// }
+// show(fn);
+// Object.prototype.bar=1;
+// var foo={
+//     goo:undefined,
+    
+// };
+// console.log(foo.bar);
+// console.log('bar' in foo);
+// console.log(foo.hasOwnProperty('bar'));
+// console.log(foo.hasOwnProperty('goo'));
+// Object.prototype.bar=1;
+// var foo={
+//     moo:2,
+// }
+// console.log(foo)
+// for(var i in foo){
+//     console.log(i);
+// }
+// function foo1() {
+//     return{
+//         bar:'hello'
+//     };
+// }
+// function foo2() {
+//     return{
+//         bar:'hello'
+//     };
+// }
+// console.log(foo1());
+// console.log(foo2());
+// console.log(function () {
+//     return  arguments instanceof Object;
+// }())
+// console.log(Boolean(false));
+// console.log(Boolean('0'));
+// console.log(Boolean(''));
+// console.log(Boolean(NaN));
+// var x=1;
+// if(function f (){}){
+//     x+typeof f;
+// }
+// console.log(f)
+// console.log(x);
+// console.log('b'+'c'+ +'a'+'a')
+// var obj={
+//     a:1,
+//     b:2
+// }
+// Object.setPrototypeOf(obj,{c:3});
+// Object.defineProperty(obj,'d',{value:4,enumerable:false});
+// for(let prop in obj){
+//     console.log(prop);
+// }
+// function sum(...args){
+//   var num = 
+//   return sum(...args1,...args)
+// }
+// function add(...args){
+//     return function (...args1){
+//         if(args1.length) {
+//             return add(...args, ...args1)
+//         } else {
+//             return args
+//         }
+//     }
+// }
+// console.log(add(2)(3)())
+
+// for(var i=0;i<5;i++){
+//     var btn=document.createElement('button');
+//     btn.appendChild(document.createTextNode('按钮'+i));
+//     btn.addEventListener('click',function () {
+//         console.log(i);
+//     })
+//     document.body.appendChild(btn);
+// }
+
+
+// var d={};
+// var b=['car','house'];
+// b.forEach(function (k) {
+//     d[k]=undefined;
+// })
+// console.log(d);
+
+// var arr1='john'.split('');[john]
+// var arr2=arr1.reverse();[nhoj]
+// var arr3='jones'.split('');[jones]
+// arr2.push(arr3);[nhoj,[jones]]
+// console.log('arr1:length='+arr1.length+'last='+arr1.splice(-1));4 3
+// console.log('arr2:length='+arr2.length+'last='+arr2.splice(-1));5 []
+// var arr1='john'.split('');
+// var arr2=arr1.reverse();
+// var arr3='jones'.split('');
+// arr2.push(arr3);
+// console.log(arr1)
+// console.log(arr2)
+// console.log(arr3)
+// console.log('arr1:length='+arr1.length+'last='+arr1.splice(-1));
+// console.log('arr2:length='+arr2.length+'last='+arr2.splice(-1));
+
+// console.log("0 || 1="+(0||1));
+// console.log('1 || 2='+(-1||2));
+// console.log('0&&1='+(-6&&-1&&5));
+// console.log('1&&2'+(3&&0&&4));
+
+// var a={}
+// b={key:'b'};
+// c={key: 'c'};
+// a[b]=123;
+// a[c]=456;
+// console.log(a)
+// console.log(a[b]);
+// console.log(a[c]);
+
+
+
+var request = window.indexedDB.open('myIndexBd', 2);
+var db = null;
+request.onerror = function(e){
+}
+request.onsuccess = function(e){
+    db = e.target.result;
+}
+request.onupgradeneeded = function(e){
+    db = e.target.result;
+    if (!db.objectStoreNames.contains('users')) {
+        var store = db.createObjectStore('users', { keyPath: 'id' }); // 创建表
+        store.createIndex('asd', 'name', {unique: false}) // 索引的作用是可以通过索引去查找数据，默认是通过主键查找
+        store.createIndex('age', 'age', {unique: false}) // unique 索引值可能重复，为true时，索引值重复不会重复添加数据
+    }
+}
+function addData(){
+    var request = db.transaction(['users'], 'readwrite').objectStore('users').add({id: 1, name: 'han', age: 20});
+    var request = db.transaction(['users'], 'readwrite').objectStore('users').add({id: 2, name: 'guo', age: 20});
+    request.onsuccess = function (e) {
+        console.log('数据写入成功');
+    };
+
+    request.onerror = function (e) {
+        console.log('数据写入失败');
+    }
+}
+setTimeout(()=>{
+    addData()
+},1000)
+function getData(){
+    // var res = db.transaction(['users'], 'readwrite').objectStore('users').get(1); // 通过主键查找
+    var res = db.transaction(['users'], 'readwrite').objectStore('users').index('age').get(10); // 通过索引asd查找
+    // 更新就是put，删除就是delete
+    res.onsuccess = function (e) {
+        console.log('数据读取成功', res.result);
+    };
+
+    res.onerror = function (e) {
+        console.log('数据读取失败');
+    }
+}
+setTimeout(()=>{
+    getData()
+},1500)
+</script>
+<script>
+//     (function (x) {
+//     return (function (y) {
+//         console.log(x);
+//     })(2)
+// })(1);
+
+// var length=10;
+// function fn() {
+//     console.log(this)
+//     console.log(this.length);
+// }
+// var obj={
+//     length:5,
+//     method:function (fn) {
+//         fn();
+//         console.log(arguments)
+//         arguments[0]();
+//     }
+// };
+// obj.method(fn,1);
+
+// var myObject={
+//     foo:'bar',
+//     func:function () {
+//         var self=this;
+//         console.log('outer func: this.foo='+this.foo);
+//         console.log('outer func: self.foo='+self.foo);
+//         (function () {
+//             console.log('inner func :this.foo='+this.foo);
+//             console.log('inner func :self.foo='+self.foo)
+//         })()
+//     }
+// }
+// myObject.func();
+// function output(a) {
+//     console.log(a);
+// }
+// output(typeof function () {
+//     output('Hello World!')
+// }())
+// function test() {
+//     var n=1573;
+//     function add() {
+//         n++;
+//         console.log(n);
+//     }
+//     return {n:n,add:add}
+// }
+// var result=test();//{n:1573,add()}
+// var result2=test();//{n:1573}
+// result.add();//1574
+// result.add();//75
+// console.log(result.n);//73
+// result2.add();//74
+
+
+// var b=1;
+// function outer() {
+//     console.log(b)//und
+//     var b=2;
+//     function inner() {
+//         console.log(b)//und
+//         b++;
+//         console.log(b)//NaN
+//         var b=3;
+//         console.log(b);//3
+//     }
+//     inner();
+// }
+// outer();
+// var settings={
+//     username:'alan',
+//     level:19,
+//     health:90
+// }
+// var data=JSON.stringify(settings,['level','health']);
+// console.log(data);
+// function Dog(name) {
+//     this.name=name
+// }
+// Dog.prototype.bark=function () {
+//     console.log(`Woof I am ${this.name}`)
+// }
+// const pet=new Dog('Mara');
+// pet.bark();
+// delete  Dog.prototype.bark;
+// pet.bark();
+
+</script>
+</html>

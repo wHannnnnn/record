@@ -1,0 +1,21 @@
+git merge --abort 代码合并了后发现有冲突, 可取消合并代码
+git merge --squash 合并其他分支多条commit记录为一条
+git rebase --onto B 开始的commitId 结束的commitId
+git checkout -b dev origin/dev 切换分支
+
+git checkout -b dev
+git push origin dev:dev
+
+git push origin --delete dev
+
+git config --global credential.helper store 解决每次pull都登录
+
+git checkout dev   git merge master   git push -u origin dev
+
+git remote add origin 自己仓库地址 （代码提交到地址仓库）  git push -u origin master 提交到远程
+
+git push origin --delete dev20181018 删除远程分支
+
+git config --global http.sslVerify "false"
+
+git reset --soft HEAD~1  撤销commit   git reset HEAD~1 撤销add和commit

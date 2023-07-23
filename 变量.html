@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    // let const
+    // let b = 'b1'
+    // // let b = 'b2'   b has already been declared let不允许重新定义
+    // // var b = 'b2'   同上
+    // function geta(){
+    //     this.b = 'b2';  // this指向window，可以通过window.b获取
+    //     var c = 'c';
+    // }
+    // geta();
+    // // b = 20   b改为20，window.b不变
+    // console.log(b, window.b) // 'b1'  'b2'   // let定义块级作用域，变量不在window中
+    // // console.log(c) // not defined
+
+    // var a = 1;
+    if (true) {
+        // 死区开始--------------------------
+        // 访问 a 都会报错，不能在声明之前使用
+        // a = 2;
+        // console.log(a);
+        // 死区结束--------------------------
+        // let a;
+        // console.log(a); // undefined
+
+        // a = 3;
+        // console.log(a); // 3
+    }
+    // 函数声明优先于 变量提升和函数表达式
+    // console.log(a); // f a(){console.log(3)}
+    // var a = 1;
+    // var a = function () {
+    //     console.log(2);
+    // }
+    // console.log(a)
+    // function a() {
+    //     console.log(3);
+    // }
+    // console.log(a); // f a(){console.log(2)}
+    // 解析为：
+    // var a;
+    // a = function(){
+    //     console.log(3);
+    // }
+    // var a;
+    // var a;
+    // console.log(a);
+    // a = 1;
+    // a = function () {
+    //     console.log(2);
+    // }
+    // console.log(a);
+</script>
+<script>
+    let a = 0
+    if (true) {
+        // console.log(a, window.a)
+        // var a = 1 // 此时也是函数let a = function后 a = 1
+        console.log(a, window.a)
+            // // function a() { }  // 在此处转换window.a = a，块级作用域的函数声明类似于let，不允许定义重名变量，如果条件是false不会执行内部代码
+            // console.log(a, window.a)
+            // a = 21 // a是块级作用域变量，是let，不在window中
+            // console.log(a, window.a)
+    }
+    console.log('外部', a, window.a)
+        // function ff(){
+        //     function fn(){
+        //         console.log(1)
+        //     }
+        //     var fn=1
+        //     console.log(fn,window.fn)
+        // }
+        // ff()
+        // console.log(fn,window.fn)
+
+    if (true) {
+        function fn() {
+            console.log(1)
+        }
+        fn = 1
+        console.log(fn, window.fn)
+    }
+    console.log(fn, window.fn)
+</script>
+
+</html>

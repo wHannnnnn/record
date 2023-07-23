@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    // 1. 输入框输入中文过程触发@input，需要中文输入选择完成后再触发@input事件。
+    // compositionstart和compositionend事件，compositionstart中文输入中，compositionend中文输入完成
+    // 定义个变量lock = false，compositionstart时lock = true，compositionend时lock=false，@input事件中lock=false时在执行后续操作；
+    // 2. 键盘展开，android屏幕内容高度变化，影响定位元素被弹起。
+    // 键盘弹起时，让定位元素隐藏或改为静态定位，收起时再恢复。
+    // android通过页面容器高度判断，监听resize事件，如果当前页面容器高度 < 页面容器高度 则弹出，否则是收起事件
+    // ios通过聚焦失焦事件判断，focusin键盘弹起，focusout键盘收起
+    // 3. ie设置flex纵向布局撑不开
+    // flex:1 属性在谷歌没问题flex: 0%，ie下flex-basis: 0
+    // 4. ios滑动不流畅
+    // 滚动父元素设置 -webkit-overflow-scrolling: touch;
+    // 内部有fixed定位会影响fixed
+    // 5. 300毫秒延迟
+    // 移动端无法判断点击后是单击还是双击，300ms之内再次点击就是双击，300ms以内手指移开是点击事件
+</script>
+<script>
+</script>
+
+</html>
