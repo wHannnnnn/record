@@ -1,7 +1,5 @@
 # js及相关问题
-
 [toc]
-
 ## 1. 闭包
   * 声明在一个函数中的函数，叫做闭包函数。
   * 内部函数总是可以访问其所在的外部函数中声明的参数和变量，即使在其外部函数被返回（寿命终结）了之后。
@@ -149,7 +147,7 @@
   > defer属性执行到script标签时会立即下载，下载的过程中页面不会停止解析，页面解析完成后执行；
   > async属性执行到script标签时会立即下载，下载的过程中页面也会解析，但是下载完会立即执行，页面停止解析
 
-## 6. 实现 new、call、apply、bind、instance、reduce
+## 6. 原理实现 new、call、apply、bind、instance、reduce
   1. new
   > 注意项：原型、this、返回值是否为对象
   ```javascript
@@ -271,7 +269,7 @@
 ## 8. 浏览器缓存、垃圾回收
   1. 强制缓存、协商缓存
   > * 强制缓存优先级大于协商缓存，强制缓存设置no-cache浏览器会发请求协商缓存，设置no-store不走缓存；
-  > * 强制缓存的from disk cache 和 from memory cache？ 首次进入200，刷新再次进入disk cache（硬盘）或者 memory cache（内存）；
+  > * 强制缓存的from disk cache 和 from memory cache？ 首次进入200，普通刷新再次进入disk cache（硬盘）或者 memory cache（内存），强制深度刷新重新请求资源；
   > * Etag 和 If-None-Match  Etag服务端返回的code，下次请求放在请求头If-None-Match中，服务端比较；
   > * If-Modified-Since与Last-Modified Last-Modified最后修改时间和Etag同理，判断是否相同；
   > * 使用If-Modified-Since 和 Last-Modified的缺点：Last-Modified 过期时间只能精确到秒。如果在同一秒既修改了文件又获取文件，客户端是获取不到最新文件的。

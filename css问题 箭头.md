@@ -1,7 +1,5 @@
 # css及相关问题
-
 [toc]
-
 ## 1. flex布局 常用属性
 > flex-direction 主轴排列方向
 > flex-wrap 换行 
@@ -19,7 +17,7 @@
     > 元素2: width: 200px; flex-shrink: 3;
     > 总和 = flex-shrink权重值1 * 元素宽度1 + flex-shrink权重值2 * 元素宽度2 = 800
     > 元素1比例： flex-shrink权重值1 * 元素宽度1 / 800 = 1/4
-    > 元素2比例： flex-shrink权重值2 * 元素宽度2 / 800 = 6/4
+    > 元素2比例： flex-shrink权重值2 * 元素宽度2 / 800 = 6/8
     > 实际总缩放100px，元素1占: 100 * (1/4) = 25，元素1占: 100 * (3/4) = 75
 
   * flex-basis 元素初始值，优先级大于width。小于min-width和max-width

@@ -5,8 +5,7 @@ const decodeString = (s = '3[a2[c2[d]]2[e]]') => {
     let result = '';
     for (const char of s) {
         if (Number(char) == char) {
-            num = num * 10 + Number(char); // 算出倍数
-            console.log(num)
+            num = num * 10 + Number(char); // 算出倍数 *10 因为有连续数字12 321
         } else if (char == '[') { // 遇到 [
             strStack.push(result); // result串入栈
             result = ''; // 入栈后清零
