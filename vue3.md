@@ -73,7 +73,7 @@ maxSequence
 > context有 attrs、emit、slots、expose
 > 1. attrs 存储没有被props显式声明的属性（包括emit）
 > 2. emit 以on开头的认为是自定义事件，即使没有声明也会被添加到vnode.props中，调用emit会从props中获取handlerName去执行
-> 3. 父组件编写子组件插槽部分的模版，在子组件渲染的时候把这部分填充到子组件中，父组件使用插槽将slots对象添加到子组件中，context get读取this.$slots时直接返回instance.slots对象
+> 3. slots 父组件编写子组件插槽部分的模版，在子组件渲染的时候把这部分填充到子组件中，父组件使用插槽将slots对象添加到子组件中，context get读取this.$slots时直接返回instance.slots对象
 > 4. expose 子组件导出的方法
 
 3. 注册生命周期

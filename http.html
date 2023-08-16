@@ -2,56 +2,59 @@
 <html lang="en">
 
 <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
 
 <body>
-	<ul id="aul">
-		<li>1</li>
-		<li>2</li>
-		<li>3</li>
-		<li>4</li>
-	</ul>
+    <ul id="aul">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+    </ul>
 </body>
 <!-- http完整请求流程 http协议 三次握手 四次挥手 浏览器渲染解析过程 -->
 <script>
-	let aa = document.getElementById('aul')
-	aa.addEventListener('click', function(e){
-		console.log(e.target, e.currentTarget)
-	})
-	// 1. http协议  超文本传输协议 浏览器发送请求服务端接收请求返回数据的过程；
-	// 2. http完整请求流程
-			// 1). 浏览器解析域名
-			// 2). TCP三次握手
-			// 3). 建立TCP连接后 客户端可以发送http请求
-			// 4). 服务器响应请求传数据 浏览器获取html文件
-			// 5). 浏览器解析html文件，构建DOM树，解析css，构建cssom树，构建渲染树（还未显示在页面，需要先布局），布局渲染树，绘制渲染树，
-			//解析js文件
-			// 6). 四次挥手 TCP连接结束
-	// 3. 三次握手 (SYN ACK FIN)
-			// 客户端发送SYN数据包到服务端，服务端接收SYN并将SYN和ACK数据包发送到客户端，客户端接收后将ACK数据包发送到服务端，确保连接成功
-			// 第一次连接 服务端： 客户端发送成功，自己接收成功，
-			// 第二次连接 客户端： 自己发送成功 接收成功，服务端发送成功，接收成功   服务端： 自己接收成功， 客户端发送成功
-			// 第三次连接 服务端： 客户端发送成功 接收成功，自己发送成功，接收成功   客户端： 自己发送成功 接收成功，服务端发送成功，接收成功
-	// 4. 四次挥手
-			// 客户端发送FIN ACK数据包到服务端，通知服务端将要关闭连接，客户端进入FIN_WAIT状态，此时可以接收数据但是不能发送服务；
-			// 服务端接收FIN数据包并将ACK包发送到客户端，（知道需要断开连接）进入CLOSE_WAIT状态，此时无法读取数据但是可以向客户端发送数据； 客户端接收了ACK包进入FIN_wait2状态（等待服务端发送FIN包）
-			// 服务端将FIN包发送给客户端，进入LAST_ACK状态（此时无法发送也无法读取数据），等待客户端发送ACK包；
-			// 客户端接收FIN包，发送ACK包，进入TIME_WAIT状态，最后等待服务端接收ACK包变为CLOSED状态，结束连接
-	// 5. script标签为啥不放在head中？ 里面的defer和async是啥？
-		// 阻塞后续进程
-		// defer属性执行到script标签时会立即下载，下载的过程中页面处理不会停止，页面解析完成后执行；
-		// async属性执行到script标签时会立即下载，下载的过程中页面也会解析，但是下载完会立即执行，页面停止解析
-		// 如果是在头部中引入的script可以加上defer，最好放在body最下面
-	// 6. http1.0，http1.1，http2.0
-		// 1.0 每次请求都要建立一次TCP链接，浪费资源
-		// 1.1 Connection: keep-alive，串行单线程，后面的请求需要等待前面的请求完，会阻塞请求
-		// 2.0 多路复用，多个请求在一个链接上完成，每个请求都有唯一标识，即使比较耗时也不会影响到后面的请求
-		// 3.0  wifi断了，不需要重新建立连接
-	// 7. CDN原理
+    let aa = document.getElementById('aul')
+    aa.addEventListener('click', function(e) {
+            console.log(e.target, e.currentTarget)
+        })
+        // 1. http协议  超文本传输协议 浏览器发送请求服务端接收请求返回数据的过程；
+        // 2. http完整请求流程
+        // 1). 浏览器解析域名
+        // 2). TCP三次握手
+        // 3). 建立TCP连接后 客户端可以发送http请求
+        // 4). 服务器响应请求传数据 浏览器获取html文件
+        // 5). 浏览器解析html文件，构建DOM树，解析css，构建cssom树，构建渲染树（还未显示在页面，需要先布局），布局渲染树，绘制渲染树，
+        //解析js文件
+        // 6). 四次挥手 TCP连接结束
+        // 3. 三次握手 (SYN ACK)
+        // 客户端发送SYN数据包到服务端，服务端接收SYN并将SYN和ACK数据包发送到客户端，客户端接收后将ACK数据包发送到服务端，确保连接成功
+        // 第一次连接 服务端： 客户端发送成功，自己接收成功，
+        // 第二次连接 客户端： 自己发送成功 接收成功，服务端发送成功，接收成功   服务端： 自己接收成功， 客户端发送成功
+        // 第三次连接 服务端： 客户端发送成功 接收成功，自己发送成功，接收成功   客户端： 自己发送成功 接收成功，服务端发送成功，接收成功
+        // 4. 四次挥手
+        // 客户端发送FIN ACK数据包到服务端，通知服务端将要关闭连接，客户端进入FIN_WAIT状态，此时可以接收数据但是不能发送服务；
+        // 服务端接收FIN数据包并将ACK包发送到客户端，（知道需要断开连接）进入CLOSE_WAIT状态，此时无法读取数据但是可以向客户端发送数据； 客户端接收了ACK包进入FIN_wait2状态（等待服务端发送FIN包）
+        // 服务端将FIN包发送给客户端，进入LAST_ACK状态（此时无法发送也无法读取数据），等待客户端发送ACK包；
+        // 客户端接收FIN包，发送ACK包，进入TIME_WAIT状态，最后等待服务端接收ACK包变为CLOSED状态，结束连接
+        // 5. script标签为啥不放在head中？ 里面的defer和async是啥？
+        // 阻塞后续进程
+        // defer属性执行到script标签时会立即下载，下载的过程中页面不会停止解析，页面解析完成后执行；
+        // async属性执行到script标签时会立即下载，下载的过程中页面也会解析，但是下载完会立即执行，页面停止解析
+        // 如果是在头部中引入的script可以加上defer，最好放在body最下面
+        // 6. http1.0，http1.1，http2.0
+        // 1.0 每次请求都要建立一次TCP链接，浪费资源
+        // 1.1 Connection: keep-alive，串行单线程，后面的请求需要等待前面的请求完，会阻塞请求
+        // 1.1 同一个TCP 可以发送多个请求， 可以有多个TCP链接， chrome限制6个 ， 但是同一个TCP 中的多个请求按顺序串行处理， 会队头阻塞
+        // 2.0 多路复用，多个请求在一个TCP链接上完成，每个请求都有唯一标识，即使比较耗时也不会影响到后面的请求，
+        // 2.0 加了双工模式，服务器可以同时处理多个请求了。 加入多路复用，同域名上的所有通信都在单个连接上完成，单个连接可以并行的进行请求和相应
+        // 2.0 以帧为最小数据单位，每个帧都会有标识自己属于哪个流，多个帧组成一个流.
+        // 2.0 多路复用，其实就是一个 TCP 里存在多条流
+        // 3.0  wifi断了，不需要重新建立连接
 </script>
 
 </html>

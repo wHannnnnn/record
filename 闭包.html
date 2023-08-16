@@ -32,9 +32,9 @@
         return bb;
     }
     var aa = fn();
-    console.log(aa, window.bb) // 内部变量return出来
+    console.log(aa, window.bb) // aaa undefined，内部变量return出来
         // 功能：输入框输入字段需要接口校验 将错误的值缓存起来 减少接口的调用
-    var afn = (function fn1(val) {
+    var bibao = (function fn1(val) {
         var arr = []
         return {
             fn1: function(val) {
@@ -45,10 +45,9 @@
             }
         }
     })()
-    var a1 = afn.fn1('1')
-    a1 = afn.fn1('2') // 销毁第一个
-    console.log(a1)
-        // 清除闭包：创建闭包的变量 afn = null 或者重新创建闭包 会销毁上一个闭包  （变量不被引用会被回收）
+    var a1 = bibao.fn1('1')
+    a1 = bibao.fn1('2') // 销毁第一个
+        // 清除闭包：创建闭包的变量bibao=null 或者重新创建闭包 会销毁上一个闭包  （变量不被引用会被回收）
         // 下面是不使用闭包
         // function fn1() {
         //     var _this = this

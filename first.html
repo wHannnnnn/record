@@ -164,7 +164,7 @@
         // 图片懒记载的原理 (src='default.jpg' data-src='url'    scroll距离 + 窗口高度 > 元素距离顶部高度  &&  scroll距离 + 窗口高度 - 元素距离顶部高度 < 窗口高度 || scroll距离 < 元素距离顶部高度  &&  防抖事件)
         // 两个数组合并为一个数组  concat   [...[], ...[]]
         // 观察者模式和订阅发布模式
-        // 深度优先遍历 广度优先遍历（了解） ！！！algorithm文件中！！！
+        // 深度优先遍历 广度优先遍历（了解）
         // MVC 和 MVVM ？ 
         // MVC（view（视图） model（模型 处理数据） control（控制器）） 用户操作视图view，control接收view指令更新model，model变化后更新view
         // typeof 和 instanceof的缺点？
@@ -199,23 +199,25 @@
     // 用户不需要从源站获取数据，通过CDN，用户选择最优的线路，
     // CDN就是将数据缓存到离用户最近的地方，最快的获取数据，
     // 减少源站负载压力，减少网络压力，避免用户请求阻塞
-    // websocket? 反正就是持续链接
+    // websocket? 就是持续链接
     // babel 和 polyfill
     // babel转换语法（let const =>），polyfill转换api（promise map set）
+    // 位移运算符 >> <<： 左位移 5 << 3 = 5 * 2^3   右位移 5 >> 1 = 5 / 2^1（四舍五入）
 </script>
 <!-- 浏览器缓存 垃圾回收-->
 <script>
     // 强制缓存
     // 强制缓存优先级大于协商缓存，强制缓存设置no-cache浏览器会发请求协商缓存，设置no-store不走缓存；
-    // 强制缓存的from disk cache 和 from memory cache？ 首次进入200，刷新或关闭tab再次进入disk cache（硬盘），后面再刷新就memory cache（内存），
+    // 强制缓存的from disk cache 和 from memory cache？ 首次进入200，刷新再次进入disk cache（硬盘）或者 memory cache（内存），
     // Etag 和 If-None-Match  Etag服务端返回的code，下次请求放在请求头If-None-Match中，服务端比较；
     // If-Modified-Since与Last-Modified Last-Modified最后修改时间和Etag同理，判断是否相同
+    // 使用If-Modified-Since 和 Last-Modified的缺点：Last-Modified 过期时间只能精确到秒。如果在同一秒既修改了文件又获取文件，客户端是获取不到最新文件的。
 
     // 浏览器垃圾回收机制 
     // 全局变量不会被回收。
     // 局部变量会被回收，也就是函数一旦运行完以后，函数内部的东西都会被销毁。
     // 只要被另外一个作用域所引用就不会被回收（闭包）
-    // 局部变量被使用（闭包）下次闭包重定义回收上一个闭包或者=null
+    // 局部变量被使用（闭包）下次闭包重定义回收上一个闭包或者创建闭包的变量=null
     // 对象没有被其他变量引用，对象会被回收
 </script>
 <!-- xss和csrf -->

@@ -126,7 +126,14 @@
     //  align-self: flex-start/center/flex-end; 元素内的某个项的对齐方式
     //  order 排序
     //  flex：1 相当于flex: 1 1 0的简写 包括三个属性  flex-grow（剩余空间分配） flex-shrink（缩放比例） flex-basis（初始值 默认0%） （详细解释）
-    // flex-shrink比例计算 
+    // flex-shrink比例计算
+    // 父级元素200
+    // 元素1: width: 100px; flex-shrink: 2;
+    // 元素2: width: 200px; flex-shrink: 3;
+    // (flex-shrink权重值1 * 元素宽度1 + flex-shrink权重值2 * 元素宽度2) = 800
+    // 元素1比例： flex-shrink权重值1 * 元素宽度1 / 800 = 1/4
+    // 元素2比例： flex-shrink权重值2 * 元素宽度2 / 800 = 6/4
+    // 实际总缩放100px，元素1占: 100 * (1/4) = 25，元素1占: 100 * (3/4) = 75
     // flex-basis 优先级大于width，小于min-widrh max-width
     // 问题：梯形布局   左侧固定右侧自适应   垂直水平居中
     // 2. 不定宽高元素水平垂直居中
